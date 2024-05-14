@@ -5,36 +5,38 @@
     <a class="btn success" href="{{route('agregar.producto')}}">+ Agregar producto</a>
 </div>
 <div>
+
 <table id="example" class="display" style="width:100%">
     <thead>
         <tr>
+            <th>Codigo</th>
             <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>Precio de compra</th>
+            <th>Precio de venta</th>
+            <th>Existencia</th>
+
         </tr>
     </thead>
     <tbody>
-
+        @foreach ($productos as $item)
         <tr>
-            <td>Donna Snider</td>
-            <td>Customer Support</td>
-            <td>New York</td>
-            <td>27</td>
-            <td>2011-01-25</td>
-            <td>$112,000</td>
+            <td>{{$item->codigo}}</td>
+            <td>{{$item->nombre}}</td>
+            <td>{{$item->compra}}</td>
+            <td>{{$item->venta}}</td>
+            <td>{{$item->existencia}}</td>
         </tr>
+        @endforeach
+
     </tbody>
     <tfoot>
         <tr>
+            <th>Codigo</th>
             <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Age</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>Precio de compra</th>
+            <th>Precio de venta</th>
+            <th>Existencia</th>
+
         </tr>
     </tfoot>
 </table>

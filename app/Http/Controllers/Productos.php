@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Productos as ModelsProductos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
-
-
+use Illuminate\Support\Facades\DB;
 
 class Productos extends Controller
 {
     public function view(){
         if (Auth::check()) {
-            return view('home.productos');
+            $productos=DB::table('productos')->get();
+
+            return view('home.productos')->with('productos',$productos);
         } else {
             return view('login');
         }
@@ -29,11 +29,19 @@ class Productos extends Controller
     public function agregarproductopost(Request $request){
 
         $request->validate([
-            'producto'=>'required',
+            'nombre'=>'required|unique:productos',
+            'codigo'=>'required|unique:productos',
+            'compra'=>'required|numeric',
+            'venta'=>'required|numeric',
+            'existencia'=>'required|numeric',
         ]);
 
         $form = new ModelsProductos;
-        $form->producto=$request->producto;
+        $form->nombre=$request->nombre;
+        $form->codigo=$request->codigo;
+        $form->compra=$request->compra;
+        $form->venta=$request->venta;
+        $form->existencia=$request->existencia;
 
         $form->save();
         return back()->with('succes','ok');
