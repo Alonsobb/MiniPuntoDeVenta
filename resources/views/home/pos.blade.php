@@ -28,6 +28,7 @@
                         <th>Name</th>
                         <th>Costo</th>
                         <th>Existencia</th>
+                        <th>Agregar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,8 +36,11 @@
                         <tr>
                             <td>{{ $item->codigo }}</td>
                             <td>{{ $item->nombre }}</td>
-                            <td>{{ $item->venta }}</td>
+                            <td>${{ $item->venta }}</td>
                             <td>{{ $item->existencia }}</td>
+                            <td>
+                                <div class="btn success">Agregar</div>
+                            </td>
                         </tr>
                     @endforeach
 
@@ -49,11 +53,35 @@
 
 @section('script')
     <script>
-        $('#venta').DataTable({
-            paging: false
+        $('#productos').DataTable({
+            paging: false,
+            searching: false
         });
         $('#productos').DataTable({
-            paging: false
+            paging: false,
+            search: {
+                boundary: true
+            }
         });
+
+
+        function addNewRow() {
+            $('#productos').row
+                .add([
+                    counter + '.1',
+                    counter + '.2',
+                    counter + '.3',
+                ])
+                .draw(false);
+
+            counter++;
+        }
+
+        let counter = 1;
+
+
+
+        // Automatically add a first row of data
+        addNewRow();
     </script>
 @endsection
