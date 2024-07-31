@@ -9,6 +9,7 @@
                         <th>Codigo</th>
                         <th>Name</th>
                         <th>Costo</th>
+                        <th>Cantidad</th>
 
 
                     </tr>
@@ -34,12 +35,12 @@
                 <tbody>
                     @foreach ($productos as $item)
                         <tr>
-                            <td>{{ $item->codigo }}</td>
-                            <td>{{ $item->nombre }}</td>
-                            <td>${{ $item->venta }}</td>
-                            <td>{{ $item->existencia }}</td>
+                            <td id="codigo">{{ $item->codigo }}</td>
+                            <td id="nombre">{{ $item->nombre }}</td>
+                            <td id="venta">${{ $item->venta }}</td>
+                            <td id="existencia">{{ $item->existencia }}</td>
                             <td>
-                                <div class="btn success">Agregar</div>
+                                <div class="btn success agregar">Agregar</div>
                             </td>
                         </tr>
                     @endforeach
@@ -53,10 +54,7 @@
 
 @section('script')
     <script>
-        $('#productos').DataTable({
-            paging: false,
-            searching: false
-        });
+
         $('#productos').DataTable({
             paging: false,
             search: {
@@ -64,24 +62,34 @@
             }
         });
 
+        var tblventas = new DataTable('#venta');
 
-        function addNewRow() {
-            $('#productos').row
-                .add([
-                    counter + '.1',
-                    counter + '.2',
-                    counter + '.3',
+
+        $(".agregar").each(function() {
+            $(this).on("click", function() {
+                a=[]
+
+                $($(this).closest("tr").children()).each(function() {
+                    if ($(this).attr('id')) {
+                        a.push( $(this).text())
+                    }
+                })
+                $($('#productos').attr("tbody")).each(function(){
+                    console.log($(this));
+                })
+/*                 tblventas.row.add([
+                    a[0],
+                    a[1],
+                    a[3],
+                    '<input  class="input type="number" value="1"></input>',
                 ])
-                .draw(false);
+                .draw(); */
+            })
+        })
 
-            counter++;
-        }
+        $($('#productos')).each(function(){
+                    console.log($(this));
+                })
 
-        let counter = 1;
-
-
-
-        // Automatically add a first row of data
-        addNewRow();
     </script>
 @endsection
